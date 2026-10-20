@@ -4,12 +4,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Phone, Moon, Sun } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { useTheme } from '../context/ThemeContext';
+import { usePortfolio } from '../context/PortfolioContext';
 
 const Navbar: FC = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('home');
     const { theme, toggleTheme } = useTheme();
+    const { selectedAlbumId, selectAlbum } = usePortfolio();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -40,6 +42,16 @@ const Navbar: FC = () => {
         }
     }, [isMobileMenuOpen]);
 
+    const handleNavClick = (href: string) => {
+        if (selectedAlbumId) {
+            selectAlbum(null);
+            setTimeout(() => {
+                const target = document.querySelector(href);
+                target?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+    };
+
     const navLinks = [
         { name: 'Home', href: '#home', id: 'home' },
         { name: 'About', href: '#about', id: 'about' },
@@ -57,7 +69,11 @@ const Navbar: FC = () => {
             )}
         >
             <div className="container mx-auto px-6 flex items-center justify-between">
-                <a href="#home" className="flex items-center gap-3 group">
+                <a
+                    href="#home"
+                    onClick={() => handleNavClick('#home')}
+                    className="flex items-center gap-3 group"
+                >
                     <div className="relative">
                         <img src="/pic.png" alt="Lex Elite Logo" className="w-9 h-9 object-contain transition-transform duration-700 group-hover:scale-110" />
                         <div className="absolute -inset-1 bg-luxury-gold/20 blur-lg opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -82,9 +98,10 @@ const Navbar: FC = () => {
                             <a
                                 key={link.name}
                                 href={link.href}
+                                onClick={() => handleNavClick(link.href)}
                                 className={cn(
-                                    'nav-link group flex items-center gap-1',
-                                    activeSection === link.id ? 'text-luxury-gold active font-semibold' :
+                                    'nav-link group flex items-center gap-1 cursor-pointer',
+                                    activeSection === link.id && !selectedAlbumId ? 'text-luxury-gold active font-semibold' :
                                         (theme === 'dark' ? 'text-white/70 hover:text-white' : 'text-luxury-text/70 hover:text-luxury-text')
                                 )}
                             >
@@ -96,7 +113,7 @@ const Navbar: FC = () => {
                     <button
                         onClick={toggleTheme}
                         className={cn(
-                            "p-2 rounded-full transition-all duration-500 hover:bg-luxury-gold/10",
+                            "p-2 rounded-full transition-all duration-500 hover:bg-luxury-gold/10 cursor-pointer",
                             theme === 'dark' ? "text-white hover:text-luxury-gold" : "text-luxury-text hover:text-luxury-gold"
                         )}
                         title={theme === 'dark' ? "Switch to Light Luxury" : "Switch to Dark Luxury"}
@@ -116,6 +133,7 @@ const Navbar: FC = () => {
                         </a>
                         <a
                             href="#contact"
+                            onClick={() => handleNavClick('#contact')}
                             className="btn-gold !px-6 !py-2.5 text-xs uppercase tracking-widest shadow-xl"
                         >
                             Book a Shoot
@@ -208,7 +226,10 @@ const Navbar: FC = () => {
                                             "text-3xl font-serif tracking-tight transition-all duration-300 w-full text-center py-2",
                                             activeSection === link.id ? "text-luxury-gold italic" : "text-white/80 hover:text-white"
                                         )}
-                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        onClick={() => {
+                                            setIsMobileMenuOpen(false);
+                                            handleNavClick(link.href);
+                                        }}
                                     >
                                         {link.name}
                                     </motion.a>
@@ -220,7 +241,10 @@ const Navbar: FC = () => {
                                     animate={{ y: 0, opacity: 1 }}
                                     transition={{ delay: 0.5 }}
                                     className="mt-8 px-12 py-5 bg-luxury-gold text-white font-bold rounded-sm text-lg shadow-2xl hover:bg-luxury-gold-light transition-all text-center w-full uppercase tracking-widest text-sm"
-                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    onClick={() => {
+                                        setIsMobileMenuOpen(false);
+                                        handleNavClick('#contact');
+                                    }}
                                 >
                                     Book a Shoot
                                 </motion.a>

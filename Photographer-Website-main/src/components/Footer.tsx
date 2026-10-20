@@ -72,9 +72,18 @@ const Footer: FC = () => {
                 </div>
 
                 <div className="border-t border-luxury-border pt-12 flex flex-col md:flex-row justify-between items-center gap-6 sm:gap-8 transition-colors duration-500 text-center md:text-left">
-                    <p className="text-luxury-text-sec opacity-30 text-[10px] uppercase font-bold tracking-[0.2em] transition-colors duration-500">
-                        © 2025 CORE3 TEAM ALL RIGHTS RESERVED.
-                    </p>
+                    <div className="flex items-center gap-4">
+                        <p className="text-luxury-text-sec opacity-30 text-[10px] uppercase font-bold tracking-[0.2em] transition-colors duration-500">
+                            © 2025 CORE3 TEAM ALL RIGHTS RESERVED.
+                        </p>
+                        <a
+                            href="#admin"
+                            className="text-luxury-text-sec opacity-30 hover:opacity-100 hover:text-luxury-gold transition-all text-[10px] uppercase tracking-widest font-mono flex items-center gap-1"
+                            title="Photographer Admin Login"
+                        >
+                            <span>• Admin Login</span>
+                        </a>
+                    </div>
                     <div className="text-luxury-text-sec text-[10px] uppercase font-bold tracking-[0.2em] transition-colors duration-500 opacity-60 flex flex-col sm:flex-row gap-1 sm:gap-2 items-center">
                         <span>Designed by <span className="text-luxury-gold">CORE3</span></span>
                         <span className="hidden sm:inline">|</span>
