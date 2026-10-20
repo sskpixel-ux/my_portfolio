@@ -9,7 +9,7 @@ interface AdminLoginProps {
 
 const AdminLogin: FC<AdminLoginProps> = ({ onBackToSite }) => {
   const { login } = useAuth();
-  const [username, setUsername] = useState('admin');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -100,7 +100,7 @@ const AdminLogin: FC<AdminLoginProps> = ({ onBackToSite }) => {
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="admin"
+                  placeholder="Enter username"
                   className="w-full pl-10 pr-4 py-2.5 bg-[#070c16] border border-white/10 rounded-sm text-sm text-white focus:outline-none focus:border-luxury-gold transition-colors"
                 />
               </div>
@@ -130,17 +130,6 @@ const AdminLogin: FC<AdminLoginProps> = ({ onBackToSite }) => {
                 >
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
-              </div>
-            </div>
-
-            {/* Quick credentials hint */}
-            <div className="p-3 bg-luxury-gold/5 border border-luxury-gold/15 rounded-sm">
-              <span className="text-[10px] uppercase font-mono text-luxury-gold block mb-1">
-                Default Credentials:
-              </span>
-              <div className="text-[11px] text-white/70 space-y-0.5">
-                <p>Username: <code className="text-luxury-gold font-mono">admin</code></p>
-                <p>Password: <code className="text-luxury-gold font-mono">deepak@123</code></p>
               </div>
             </div>
 
